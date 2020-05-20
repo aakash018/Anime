@@ -3,8 +3,22 @@ const router = express.Router();
 const Character = require("../models/character");
 
 // All Character
-router.get("/", (req, res) => {
-  res.render("characters/index");
+router.get("/", async (req, res) => {
+  let searchOptions = {};
+  if (req.query.name != null && req.query.name !== "") {
+    searchOptions.name = new RegExp(req.query.name, "i");
+  }
+  try {
+    const characters = await Character.find(searchOptions);
+    console.log("1");
+    console.log(characters);
+    res.render("characters/index", {
+      characters: characters,
+      searchOptions: req.query,
+    });
+  } catch {
+    res.render("/");
+  }
 });
 
 // New Character
