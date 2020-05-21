@@ -10,8 +10,6 @@ router.get("/", async (req, res) => {
   }
   try {
     const characters = await Character.find(searchOptions);
-    console.log("1");
-    console.log(characters);
     res.render("characters/index", {
       characters: characters,
       searchOptions: req.query,
@@ -34,7 +32,7 @@ router.post("/", async (req, res) => {
   try {
     const newCharacter = await character.save();
     // res.redirect(`characters/${newCharacter.id}`)
-    res.redirect("characters");
+    res.redirect("/characters");
   } catch {
     res.render("characters/new", {
       character: character,

@@ -13,6 +13,7 @@ const bodyParser = require("body-parser");
 // Routers
 const indexRoutes = require("./routes/index");
 const chatacterRoutes = require("./routes/characters");
+const moviesRoutes = require("./routes/movies");
 
 // Initial Setup
 app.set("view engine", "ejs");
@@ -33,6 +34,7 @@ db.once("open", () => console.log("Connected"));
 // Routes INIT
 app.use("/", indexRoutes);
 app.use("/characters", chatacterRoutes);
+app.use("/movies", moviesRoutes);
 
 // Server INIT
 app.listen(process.env.PORT || 3000);
