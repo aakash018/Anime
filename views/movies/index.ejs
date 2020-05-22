@@ -1,10 +1,14 @@
 <h2>Search Movies</h2>
-<form action="/movies" method="GET">
-  <label>Title</label>
-  <input type="text" name="name" value="<%= searchOptions.title %>" />
-  <button type="submit">Search</button>
-</form>
+<div>
+  <form action="/movies" method="GET">
+    <label>Title</label>
+    <input type="text" name="name" value="<%= searchOptions%>" />
+    <button type="submit">Search</button>
+  </form>
+</div>
 <br />
-<% if (locals.characters != null) { %> <% characters.forEach(character => { %>
-<div><%= character.name %></div>
-<%});%> <% } %>
+<div>
+  <% if (locals.movies != null) { %> <% movies.forEach(movie => { %>
+  <img height="150" width="100" src="<%= movie.coverImagePath %>" />
+  <%});%> <% } %>
+</div>

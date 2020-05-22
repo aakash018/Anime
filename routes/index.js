@@ -1,10 +1,17 @@
-const express = require("express")
-const router = express.Router()
+const express = require("express");
+const router = express.Router();
+const Movies = require("../models/movies");
 
+router.get("/", async (req, res) => {
+  let movies;
+  try {
+    movies = await Movies.find().sort({ createdDate: "desc" }).limit(10).exec();
+  } catch {
+    movies = [];
+  }
+  res.render("index", {
+    movies: movies,
+  });
+});
 
-router.get('/', (req, res) => {
-    res.render("index")
-})
-
-
-module.exports = router
+module.exports = router;

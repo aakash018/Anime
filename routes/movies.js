@@ -16,7 +16,22 @@ const upload = multer({
 
 // All Movies
 router.get("/", async (req, res) => {
-  res.send("All Books");
+  let searchOptions = {};
+  console.log(req.query.name);
+  if (req.query.name != null && req.query.name !== "") {
+    console.log("1");
+    searchOptions.title = new RegExp(req.query.name, "i");
+  }
+  try {
+    const movies = await Movies.find(searchOptions);
+    console.log(searchOptions);
+    res.render("movies/index", {
+      movies: movies,
+      searchOptions: req.query.name,
+    });
+  } catch {
+    res.render("/");
+  }
 });
 
 // New Movie
