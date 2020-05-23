@@ -1,18 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://unpkg.com/filepond/dist/filepond.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
+      rel="stylesheet"
+    />
+    <script
+      defer
+      src="https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.js"
+    ></script>
+    <script
+      defer
+      src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"
+    ></script>
+    <script
+      defer
+      src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.js"
+    ></script>
+    <script defer src="https://unpkg.com/filepond/dist/filepond.js"></script>
+    <script defer>
+      document.addEventListener("DOMContentLoaded", function () {
+        FilePond.registerPlugin(
+          FilePondPluginImagePreview,
+          FilePondPluginImageResize,
+          FilePondPluginFileEncode
+        );
+        FilePond.setOptions({
+          stylePanelAspectRatio: 150 / 100,
+          imageResizeTargetWidth: 100,
+          imageResizeTargetHeight: 150,
+        });
+        FilePond.parse(document.body);
+      });
+    </script>
+    <title>Puns</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Puns</title>
-</head>
-
-<body>
-  <%- include("../views/partials/header.ejs") %>
-  <%- include("../views/partials/errorMessage.ejs") %>
-  <br />
-  <%- body %>
-  <br />
-</body>
-
+  <body>
+    <%- include("../views/partials/header.ejs") %> <%-
+    include("../views/partials/errorMessage.ejs") %>
+    <br />
+    <%- body %>
+    <br />
+  </body>
 </html>

@@ -1,6 +1,4 @@
 const mongoose = require("mongoose");
-const path = require("path");
-const coverImgBasePath = "uploads/movieCovers";
 
 const moviesSchema = new mongoose.Schema({
   title: {
@@ -20,9 +18,15 @@ const moviesSchema = new mongoose.Schema({
     default: Date.now,
   },
   coverImage: {
+    type: Buffer,
+    required: true,
+  },
+
+  coverImageType: {
     type: String,
     required: true,
   },
+
   character: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
@@ -35,10 +39,11 @@ const moviesSchema = new mongoose.Schema({
 });
 
 moviesSchema.virtual("coverImagePath").get(function () {
-  if (this.coverImage != null) {
-    return path.join("/", coverImgBasePath, this.coverImage);
+  if (this.coverImage != null && this.coverImageType != null) {
+    return `data: ${
+      this.coverImageType
+    }; charset = utf-8; base64, ${this.coverImage.toString("base64")}`;
   }
 });
 
 module.exports = mongoose.model("Movies", moviesSchema);
-module.exports.coverImgBasePath = coverImgBasePath;
