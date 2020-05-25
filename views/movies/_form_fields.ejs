@@ -17,20 +17,37 @@
     <% } %> <% }); %>
   </select>
 </div>
+
 <div>
   <label>Relese Date</label>
   <input type="date" value = "<%= (movie.releaseDate) == null ? "" :
   movie.releaseDate.toISOString().split("T")[0] %>" name= "releaseDate">
 </div>
+
 <div>
   <label for="duration">Duration</label>
   <input type="number" name="duration" value="<% movie.duration %>" min="1" />
   mins
 </div>
+
+<div>
+  <label for="duration">Rating</label>
+  <input
+    type="number"
+    name="rating"
+    value="<% movie.rating %>"
+    min="1"
+    max="10"
+    step="any"
+  />
+  / 10
+</div>
+
 <div>
   <label>Cover</label>
   <input type="file" name="cover" class="filepond" />
 </div>
+
 <div>
   <label>Description</label>
   <textarea name="description" cols="30" rows="10"></textarea>

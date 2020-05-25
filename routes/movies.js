@@ -33,6 +33,7 @@ router.post("/", async (req, res) => {
     description: req.body.description,
     character: req.body.character,
     duration: req.body.duration,
+    rating: req.body.rating,
     releaseDate: new Date(req.body.releaseDate),
   });
 
@@ -50,12 +51,12 @@ router.post("/", async (req, res) => {
 async function renderNewPage(res, movie, hasError = false) {
   try {
     const characters = await Character.find({});
-    const parms = {
+    const params = {
       characters: characters,
       movie: movie,
     };
-    if (hasError) parms.errorMessage = "Error Creating";
-    res.render("movies/new", parms);
+    if (hasError) params.errorMessage = "Error Creating";
+    res.render("movies/new", params);
   } catch {
     res.redirect("/movies");
   }

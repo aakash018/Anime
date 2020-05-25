@@ -36,6 +36,11 @@ const moviesSchema = new mongoose.Schema({
   duration: {
     type: Number,
   },
+
+  rating: {
+    type: Number,
+    required: true,
+  },
 });
 
 moviesSchema.virtual("coverImagePath").get(function () {
