@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Character = require("../models/character");
-
+const Movies = require("../models/movies");
 // All Character
 router.get("/", async (req, res) => {
   let searchOptions = {};
@@ -42,9 +42,19 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/:id", (req, res) => {
-  res.send("Show Us" + req.params.id);
+router.get("/:id", async (req, res) => {
+  try {
+    const character = await Character.findById(req.params.id);
+    const movies = await Movies.find({ character: character.id })
+      .limit(10)
+      .exec();
+    res.render("characters/show", {
+      character: character,
+      movieByCharacter: movies,
+    });
+  } catch {}
 });
+
 router.get("/:id/edit", async (req, res) => {
   try {
     const character = await Character.findById(req.params.id);
@@ -75,19 +85,13 @@ router.put("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   let character;
   try {
-    console.log("4");
     character = await Character.findById(req.params.id);
-    console.log("456");
     await character.remove();
-    console.log("567");
     res.redirect("/characters");
   } catch {
-    console.log("5");
     if (character == null) {
       res.redirect("/");
     } else {
-      console.log("6");
-      //await character.remove();
       res.redirect(`/characters/${character.id}`);
     }
   }
